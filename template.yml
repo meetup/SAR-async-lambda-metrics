@@ -26,6 +26,13 @@ Parameters:
     AllowedValues:
       - 'Lambda'
       - 'Kinesis'  
+  FunctionMemorySize:
+    Type: Number
+    Default: 128
+    MaxValue: 3008
+    MinValue: 128
+    Description: >
+      (optional) The memory to associate with the lambda processing records from 128 to 3,008 MB in 64 MB increments.
   TimeoutSeconds:
     Type: Number
     Default: 30
@@ -95,6 +102,7 @@ Resources:
     Condition: IsLambda
     Properties:
       Handler: functions/index.handler
+      MemorySize: !Ref FunctionMemorySize
       Policies:
         - Statement:
             Effect: Allow
